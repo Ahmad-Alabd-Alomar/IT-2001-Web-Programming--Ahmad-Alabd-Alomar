@@ -1,0 +1,15 @@
+# Database credentials and secrets (only config.example.php is committed to Git)
+backend/config/config.php
+
+# Runtime log files
+backend/logs/*.log
+!backend/logs/.gitkeep
+
+# Composer dependencies (restored on server via `composer install`)
+backend/vendor/
+
+# Operating system & code editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

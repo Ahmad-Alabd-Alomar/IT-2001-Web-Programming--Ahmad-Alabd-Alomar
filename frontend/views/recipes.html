@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="fw-bold mb-1">My Recipes</h2>
+    <p class="text-muted mb-0">Manage your custom recipes and ingredients.</p>
+  </div>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRecipeModal">
+    <i class="fa-solid fa-plus me-1"></i> Add Recipe
+  </button>
+</div>
+
+<!-- Search & Filter Bar -->
+<div class="row g-3 mb-4">
+  <div class="col-md-8">
+    <input type="text" class="form-control" placeholder="Search recipes by title or ingredient...">
+  </div>
+  <div class="col-md-4">
+    <select class="form-select">
+      <option value="">All Categories</option>
+      <option value="breakfast">Breakfast</option>
+      <option value="lunch">Lunch</option>
+      <option value="dinner">Dinner</option>
+    </select>
+  </div>
+</div>
+
+<!-- Static Cards Listing (Mock Data for SPA) -->
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card h-100">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="card-img-top" alt="Salad">
+      <div class="card-body">
+        <span class="badge bg-success mb-2">Lunch</span>
+        <h5 class="card-title fw-bold">Avocado Caesar Salad</h5>
+        <p class="card-text text-muted small">Fresh romaine, ripe avocado, parmesan, and light Caesar dressing.</p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> 15 mins</small>
+          <span class="fw-bold text-success">420 kcal</span>
+        </div>
+      </div>
+      <div class="card-footer bg-white border-top-0 d-flex justify-content-end gap-2">
+        <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100">
+      <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500" class="card-img-top" alt="Pancakes">
+      <div class="card-body">
+        <span class="badge bg-warning text-dark mb-2">Breakfast</span>
+        <h5 class="card-title fw-bold">Protein Oat Pancakes</h5>
+        <p class="card-text text-muted small">Fluffy oat pancakes infused with vanilla whey protein and berries.</p>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <small class="text-muted"><i class="fa-regular fa-clock me-1"></i> 20 mins</small>
+          <span class="fw-bold text-success">380 kcal</span>
+        </div>
+      </div>
+      <div class="card-footer bg-white border-top-0 d-flex justify-content-end gap-2">
+        <button class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
