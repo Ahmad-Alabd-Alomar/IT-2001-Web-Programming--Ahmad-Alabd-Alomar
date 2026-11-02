@@ -24,3 +24,34 @@
 * **What was wrong:** The initial draft generated for `AI_LOG.md` contained placeholder details (referencing tools like ChatGPT/Claude and fabricated prompts) that did not reflect my actual conversation or workflow.
 * **How I noticed:** During code review of the generated documentation, I saw listed AI tools and interactions that were not part of my actual development process.
 * **How it was fixed:** I instructed the AI to rewrite `AI_LOG.md` honestly using the actual chat history, documenting real prompts, real troubleshooting steps (e.g., Apache 403 error), and actual corrections made during the session.
+
+---
+
+## Milestone 2: Database Schema & DAO Layer Implementation
+
+### AI Tools Used
+* **Gemini (Google AI)**
+
+### Parts Assisted
+1. **SQL DDL & Seed Script:** Creating `database/schema.sql` with 5 relational entities (`users`, `categories`, `recipes`, `meal_plans`, `reviews`), foreign key constraints (`ON DELETE CASCADE` / `RESTRICT`), and sample seed data.
+2. **BaseDao Implementation:** Implementing `BaseDao.php` with dynamic PDO connection loading from `Config`, SQL injection prevention via prepared statements, and dynamic table column filtering (`only_columns()`).
+3. **Entity DAOs:** Writing specialized entity DAOs extending `BaseDao` (`UserDao`, `CategoryDao`, `RecipeDao`, `MealPlanDao`, `ReviewDao`) with custom query methods (e.g., joins, category filters, average rating aggregations).
+4. **DAO Verification Script:** Creating `backend/dao/test.php` to run automated CLI/Browser tests for CRUD operations.
+
+### Important Prompts Used
+* *"lets start on database, i have datagrip downloaded how do i procced?"*
+* *"finished, but how do i make sure the database is created correctly"*
+* *"lets create the BaseDao"*
+
+
+### AI Mistakes & Corrections
+
+#### Case 1: Assumed Direct Execution of Database Creation in DataGrip
+* **What was wrong:** The AI assumed I had already executed the database creation commands when I had only opened DataGrip and started XAMPP MySQL.
+* **How I noticed:** I had not run any SQL commands yet or set up the `recipe_tracker` schema in MySQL.
+* **How it was fixed:** I informed the AI (`"no its not , i just now started mysql in xamp didnt do anything else"`). The AI provided step-by-step instructions to create `database/schema.sql`, set up the data source connection in DataGrip, and run the schema file directly.
+
+#### Case 2: Initial Path Standard Misalignment
+* **What was wrong:** The AI initially referenced `backend/rest/dao/` in instructions while the established project repository structure placed DAO files inside `backend/dao/`.
+* **How I noticed:** I cross-checked the folder structure established in Milestone 1 and noticed the path discrepancy.
+* **How it was fixed:** Aligned all file creations (`BaseDao.php`, Entity DAOs, and `test.php`) to reside directly inside `backend/dao/` to maintain project structure consistency.
