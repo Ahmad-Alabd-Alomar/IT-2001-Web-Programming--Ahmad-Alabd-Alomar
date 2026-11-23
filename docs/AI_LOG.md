@@ -55,3 +55,31 @@
 * **What was wrong:** The AI initially referenced `backend/rest/dao/` in instructions while the established project repository structure placed DAO files inside `backend/dao/`.
 * **How I noticed:** I cross-checked the folder structure established in Milestone 1 and noticed the path discrepancy.
 * **How it was fixed:** Aligned all file creations (`BaseDao.php`, Entity DAOs, and `test.php`) to reside directly inside `backend/dao/` to maintain project structure consistency.
+---
+
+## Milestone 3: FlightPHP REST API, Middleware, Logging, External API & Swagger Docs
+
+### AI Tools Used
+* **Gemini (Google AI)**
+
+### Parts Assisted
+1. **Composer & Configuration:** Setting up `backend/composer.json` (`flightphp/core`, `firebase/php-jwt`, `zircote/swagger-php`), enabling the PHP `zip` extension in `php.ini`, and extending `config.example.php` / `config.php` with JWT and external API parameters.
+2. **Logging & Reusable Middleware:** Implementing `Logger.php` (`info.log` and `error.log`), `AuthMiddleware.php` (JWT verification), `RoleMiddleware.php` (RBAC), and `GlobalMiddleware.php` (request timing logs and centralized exception handling).
+3. **Service Layer & External API:** Building `BaseService.php`, 5 entity services (`UserService`, `CategoryService`, `RecipeService`, `MealPlanService`, `ReviewService`), and `ExternalMealService.php` integrating TheMealDB with cURL timeouts and graceful fallback responses.
+4. **REST Routes & OpenAPI Documentation:** Implementing `backend/index.php`, `.htaccess`, 7 FlightPHP route modules with PHP 8 OpenAPI attributes, and interactive Swagger UI under `backend/docs/`.
+
+### Important Prompts Used
+* *"when i open http://localhost/AhmadAlomarWP/IT-2001-Web-Programming--Ahmad-Alabd-Alomar/backend/docs/ i get No operations defined in spec!"*
+* *"GET /external/meals i get this 200 ... content-length: 0 ... POST /auth/register i get 200 ... content-length: 0"*
+
+### AI Mistakes & Corrections
+
+#### Case 1: Empty OpenAPI Spec in Swagger UI (`No operations defined in spec!`)
+* **What was wrong:** `backend/docs/openapi.php` passed the `routes/` directory path to `OpenApi\Generator::generate()` without requiring the route and middleware class files first. Because `routes/` is not autoloaded by Composer, `swagger-php`'s `ReflectionAnalyser` could not inspect the PHP 8 attributes.
+* **How I noticed:** Opening `backend/docs/` in the browser displayed `No operations defined in spec!`.
+* **How it was fixed:** Updated `backend/docs/openapi.php` to explicitly `require_once` `OpenApiSpec.php`, the middleware classes, and all 7 route files before running `Generator::generate()`.
+
+#### Case 2: Empty `200` Responses on Caught Exceptions in FlightPHP
+* **What was wrong:** When an exception was thrown during a request (such as missing config methods or validation errors), `GlobalMiddleware`'s `Flight::map('error', ...)` handler called `Flight::json(...)` without calling `Flight::response()->send()`, causing FlightPHP to exit with `content-length: 0` and HTTP status `200`.
+* **How I noticed:** Executing `GET /external/meals` and `POST /auth/register` in Swagger UI returned `200` with an empty response body.
+* **How it was fixed:** Added the JWT and External API methods to local `backend/config/config.php` and added `Flight::response()->send()` inside `GlobalMiddleware`'s error handler so error responses flush properly with their HTTP status codes.
